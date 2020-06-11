@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 	
@@ -18,26 +18,25 @@
 					<input type="text" id="username" class="form-control form-control-lg" required placeholder="Who art thou'?">
 				</div>
 
-				<button type="submit" class="btn btn-success btn-lg">Play</button>
-			</form><!-- /#username-form -->
-		</div><!-- /#start -->
+				<button type="submit" class="btn btn-success">Play</button>
+			</form>
+		</div>
 
 		<div id="game-wrapper" class="hide">
 			<div id="play">
 				<h2>Kill the Virus</h2>
-				<div id="play-wrapper">
-					
-				</div><!-- /#play-wrapper -->
-			</div><!-- /#chat -->
+					<div id="play-wrapper">
+					<img id="corona" src="./assets/images/corona6.jpg" alt="Virus icon">
+			</div>
+		</div>
 
 
-
-			<div id="users">
+		        <div id="users">
 				<h2>Users online</h2>
 				<ul id="online-users"></ul>
-			</div><!-- /#users -->
-		</div><!-- /#chat-wrapper -->
-	</div><!-- /#app -->
+			</div>
+		</div>
+	</div>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/assets/js/chat.js"></script>

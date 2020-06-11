@@ -1,4 +1,4 @@
-@import url('href="https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans+Condensed:ital,wght@1,300&display=swap" rel="stylesheet"');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans+Condensed:ital,wght@1,300&display=swap" rel="stylesheet"');
 
 body {
 	font-family: 'Anton', sans-serif;
@@ -35,7 +35,7 @@ h2 {
 
 
 .img-virus-start {
-	width: 25%;
+	width: 35%;
 }
 
 
@@ -44,31 +44,12 @@ h2 {
 	text-align: center;
 }
 
-/*
-#chat-wrapper {
-	display: flex;
-	height: 100vh;
-}
 
-
-#chat {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	border-right: 1px solid #555;
-}
-
-
-#chat .form-group {
+.form-group {
 	flex-grow: 1;
 	display: flex;
 }
 
-
-#chat .form-group #message {
-	flex-grow: 1;
-}
-*/
 
 #game-wrapper{
 	display: flex;
@@ -78,16 +59,17 @@ h2 {
 
 
 #play-wrapper{
-	background-color: black;
+	background-image: url("../images/karta.jpg");
 	height: 70vh;
-	border: 5px solid #e3001b;
 	border-radius: 5px;
+	border-radius: 250px;
+	background-size: 100%;
 }
 
 
 #play{
 	margin-left: 5rem;
-	margin-right: 5rem;
+	margin-right: 2rem;
 	width: 70%;
 	margin-top: 5rem;	
 }
@@ -96,7 +78,8 @@ h2 {
 #users {
 	flex-basis: 20%;
 	border-left: 1px solid black;
-	color: black;
+	background-color: #218838;
+
 }
 
 
@@ -106,25 +89,26 @@ h2 {
 	color: white;
 }
 
+
 #users ul {
 	margin: 0;
 	padding: 0.5rem 0.75rem;
 	list-style: none;
-	background: black;
 	color: white;
+	background-color:#218838;	
 }
 
-/*
-#message-wrapper {
-	flex-grow: 1;
+
+
+#corona {
+    vertical-align: middle;
+    border-style: none;
+	width: 4%;
+	position: absolute;
+	top: 400px;
+    left: 400px;
 }
 
-#messages li .user {
-	font-weight: bold;
-}
 
-#messages .notice {
-	font-style: italic;
-	
-}
-*/
+
+

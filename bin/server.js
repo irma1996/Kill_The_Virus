@@ -1,8 +1,5 @@
-#!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
+// Module dependencies.
 
 require('dotenv').config();
 
@@ -11,34 +8,44 @@ const debug = require('debug')('09-simple-chat:server');
 const http = require('http');
 const SocketIO = require('socket.io');
 
-/**
- * Get port from environment and store in Express.
- */
-
+// Get port from environment and store in Express.
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(app);
+// Create HTTP server.
+ const server = http.createServer(app);
 const io = SocketIO(server);
 
 io.on('connection', require('../controllers/socket_controller'));
 
-/**
- * Listen on provided port, on all network interfaces.
- */
 
+// Listen on provided port, on all network interfaces.
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-/**
- * Normalize a port into a number, string, or false.
- */
 
+const SomeRandomPosition = (range) => {
+  return Math.floor(Math.random() * range)
+};
+ 
+io.on("connection", (socket) => {
+ 
+  socket.on('user-click', (username) => {
+    console.log(username, "clicked")
+ 
+    const click = {
+      width: SomeRandomPosition(400),
+      height: SomeRandomPosition(400)
+    }
+ 
+    // Emit new image
+    io.emit('user-click', click);
+ 
+  });
+});
+
+//Normalize a port into a number, string, or false.
 function normalizePort(val) {
   const port = parseInt(val, 10);
 
@@ -55,11 +62,8 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
+// Event listener for HTTP server "error" event.
+ function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -83,10 +87,7 @@ function onError(error) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
+// Event listener for HTTP server "listening" event.
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
