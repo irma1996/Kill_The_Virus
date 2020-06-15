@@ -3,13 +3,18 @@ const socket = io();
 const startEl = document.querySelector('#start');
 const usernameForm = document.querySelector('#username-form');
 const gameWrapper = document.querySelector('#game-wrapper');
-const messageWrapper = document.querySelector('#gameboard');
 const img = document.querySelector('#corona');
-
+const room = document.querySelector('#WaitingForTheGambler');
+    
 let username = null;
 
 const updateOnlineUsers = (users) => {
 	document.querySelector('#online-users').innerHTML = users.map(user => `<li class="user">${user}</li>`).join("");
+}
+
+const firstPage = () => {
+    room.classList.add('hide');
+    gameWrapper.classList.remove('hide');
 }
 
 const SomeRandomPosition = (target) => {
@@ -22,19 +27,18 @@ img.addEventListener('click', e => {
     console.log('Hello', username);
 });
 
+
 // get username from form and emit `register-user`-event to server
 usernameForm.addEventListener('submit', e => {
 	e.preventDefault();
 
-	
 username = document.querySelector('#username').value;
-
 socket.emit('register-user', username, (status) => {
-console.log("Server acknowledged the registration :D", status);
-
+	console.log("Server acknowledged the registration :D", status);
+ 
 		if (status.joinChat) {
 			startEl.classList.add('hide');
-			gameWrapper.classList.remove('hide');
+			room.classList.remove('hide');
 
 			updateOnlineUsers(status.onlineUsers);
 		}
@@ -57,4 +61,6 @@ socket.on('online-users', (users) => {
 socket.on('user-click', (target) => {
     SomeRandomPosition(target)
 });
+
+socket.on('create-game-page', firstPage);
 

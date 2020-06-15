@@ -5,6 +5,43 @@
 const debug = require('debug')('09-simple-chat:socket_controller');
 const users = {};
 
+let game = {
+    gambler: {},
+    gameRounds: 0,
+	reaction: {},  
+	score: {}
+}
+
+function NewGame(socket) {
+    console.log('creating game from gambler: ', users[socket.id]);
+        
+    if (game.gameRounds < 10) {
+        socket.emit('get-available-space', socket.id);
+        console.log('Game rounds: ', game.gameRounds)
+    } else {
+        io.emit('game-over', game.gambler, game.score);
+        game.gameRounds = 0;
+    
+        console.log("game over");
+        return;
+    }
+ 
+};
+
+function checkUsersOnline(socket) {
+    if (Object.keys(users).length === 2) {
+        game.score[socket.id] = 0;
+ 
+        io.emit('create-game-page');
+        
+        console.log(users[socket.id] + ' started the game');
+        console.log('gambler of the game: ', game.gambler);
+ 
+        NewGame(socket);
+    } else {
+        return;
+    }
+}
 
 // Get usernames of online users
 function getOnlineUsers() {
@@ -25,13 +62,22 @@ function handleUserDisconnect() {
 }
  
 
-	 //Handle incoming message 
-	function handleChatMsg (msg) {
-		debug("Someone sent something nice: '%s'", msg);
-		
-		// broadcast to all connected sockets EXCEPT ourselves
-		this.broadcast.emit('chatmsg', msg);
-	}
+const SomeRandomPosition = (range) => {
+	return Math.floor(Math.random() * range)
+};
+	   
+		function user(username){
+		  console.log(username, "clicked")
+	   
+		  const click = {
+			width: SomeRandomPosition(550),
+			height: SomeRandomPosition(680)
+		  }
+	   
+		  // Emit new image
+		  io.emit('user-click', click);
+	   	
+};
 
 
 // Handle a new user connecting
@@ -44,6 +90,7 @@ function handleRegisterUser(username, callback) {
 		onlineUsers: getOnlineUsers(),
 	});
 
+	checkUsersOnline(this);
 
 	// broadcast to all connected sockets EXCEPT ourselves
 	this.broadcast.emit('new-user-connected', username);
@@ -52,11 +99,12 @@ function handleRegisterUser(username, callback) {
 	this.broadcast.emit('online-users', getOnlineUsers());
 }
 
+
 module.exports = function(socket) {
 	// this = io
 	debug(`Client ${socket.id} connected!`);
-	
+	io = this;
+	socket.on('user-click', user);
 	socket.on('disconnect', handleUserDisconnect);
-	socket.on('chatmsg', handleChatMsg);
     socket.on('register-user', handleRegisterUser);
 }

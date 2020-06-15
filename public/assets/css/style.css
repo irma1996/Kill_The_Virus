@@ -61,10 +61,11 @@ h2 {
 #play-wrapper{
 	background-image: url("../images/karta.jpg");
 	height: 70vh;
-	border-radius: 5px;
-	border-radius: 250px;
+	border-radius: 190px;
 	background-size: 100%;
+	position: relative;
 }
+
 
 
 #play{
@@ -100,13 +101,14 @@ h2 {
 
 
 
+
 #corona {
     vertical-align: middle;
     border-style: none;
 	width: 4%;
 	position: absolute;
-	top: 400px;
-    left: 400px;
+	top: 200px;
+	left: 200px;
 }
 
 
