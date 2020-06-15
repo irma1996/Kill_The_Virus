@@ -4,7 +4,7 @@ const startEl = document.querySelector('#start');
 const usernameForm = document.querySelector('#username-form');
 const gameWrapper = document.querySelector('#game-wrapper');
 const img = document.querySelector('#corona');
-const room = document.querySelector('#WaitingForTheGambler');
+const room = document.querySelector('#waitingForTheGambler');
     
 let username = null;
 
