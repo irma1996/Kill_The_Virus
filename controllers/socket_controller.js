@@ -1,26 +1,26 @@
-/**
- * Socket Controller
- */
 
+// Socket Controller
+ 
 const debug = require('debug')('09-simple-chat:socket_controller');
 const users = {};
 
 let game = {
-    gambler: {},
-    gameRounds: 0,
+    gamblers: {},
+    gamedRounds: 0,
 	reaction: {},  
 	score: {}
 }
 
+// Start a new game
 function NewGame(socket) {
-    console.log('creating game from gambler: ', users[socket.id]);
+    console.log('creating game from gamblers: ', users[socket.id]);
         
-    if (game.gameRounds < 10) {
+    if (game.gamedRounds < 10) {
         socket.emit('get-available-space', socket.id);
-        console.log('Game rounds: ', game.gameRounds)
+        console.log('Game rounds: ', game.gamedRounds)
     } else {
-        io.emit('game-over', game.gambler, game.score);
-        game.gameRounds = 0;
+        io.emit('game-over', game.gamblers, game.score);
+        game.gamedRounds = 0;
     
         console.log("game over");
         return;
@@ -28,6 +28,7 @@ function NewGame(socket) {
  
 };
 
+//Waiting for 2 player to conect 
 function checkUsersOnline(socket) {
     if (Object.keys(users).length === 2) {
         game.score[socket.id] = 0;
@@ -35,7 +36,7 @@ function checkUsersOnline(socket) {
         io.emit('create-game-page');
         
         console.log(users[socket.id] + ' started the game');
-        console.log('gambler of the game: ', game.gambler);
+        console.log('gamblers of the game: ', game.gamblers);
  
         NewGame(socket);
     } else {
@@ -62,6 +63,7 @@ function handleUserDisconnect() {
 }
  
 
+//function for getting a random number 
 const SomeRandomPosition = (range) => {
 	return Math.floor(Math.random() * range)
 };
@@ -69,13 +71,21 @@ const SomeRandomPosition = (range) => {
 		function user(username){
 		  console.log(username, "clicked")
 	   
-		  const click = {
-			width: SomeRandomPosition(550),
-			height: SomeRandomPosition(680)
+		  const touch = {
+			width: SomeRandomPosition(390),
+			height: SomeRandomPosition(690)
 		  }
+
+		  const delay = SomeRandomPosition(900)
+		  
+		  const touchDelay = {
+            touch,
+            delay,
+        };
+ 
 	   
 		  // Emit new image
-		  io.emit('user-click', click);
+		  io.emit('user-click', touchDelay);
 	   	
 };
 
@@ -101,10 +111,11 @@ function handleRegisterUser(username, callback) {
 
 
 module.exports = function(socket) {
-	// this = io
 	debug(`Client ${socket.id} connected!`);
 	io = this;
 	socket.on('user-click', user);
 	socket.on('disconnect', handleUserDisconnect);
-    socket.on('register-user', handleRegisterUser);
+
+	socket.on('register-user', handleRegisterUser);
+
 }

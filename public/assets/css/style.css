@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans+Condensed:ital,wght@1,300&display=swap" rel="stylesheet"');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans+Condensed:ital,wght@1,300&display=swap');
 
 body {
 	font-family: 'Anton', sans-serif;
@@ -112,5 +112,11 @@ h2 {
 }
 
 
-
+p{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+	padding: 200px;
+	font-size: 2em;
+}
 

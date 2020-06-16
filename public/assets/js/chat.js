@@ -8,15 +8,18 @@ const room = document.querySelector('#waitingForTheGambler');
     
 let username = null;
 
+// Update online users
 const updateOnlineUsers = (users) => {
-	document.querySelector('#online-users').innerHTML = users.map(user => `<li class="user">${user}</li>`).join("");
+	document.querySelector('#online-users').innerHTML = users.map(user => `<li class="user">Player: ${user}</li>`).join("");
 }
+
 
 const firstPage = () => {
     room.classList.add('hide');
     gameWrapper.classList.remove('hide');
 }
 
+// Random position image
 const SomeRandomPosition = (target) => {
     img.style.top = target.width + "px";
     img.style.left = target.height + "px";
@@ -27,8 +30,15 @@ img.addEventListener('click', e => {
     console.log('Hello', username);
 });
 
+const imgRandom = (touchDelay) => {
+	
+	setTimeout(() => {
+		SomeRandomPosition(touchDelay.touch)
+	}, touchDelay.delay);
+	
+}
 
-// get username from form and emit `register-user`-event to server
+// Register new user from startpage
 usernameForm.addEventListener('submit', e => {
 	e.preventDefault();
 
@@ -46,6 +56,7 @@ socket.emit('register-user', username, (status) => {
 
 });
 
+//Sockets for user registration and diconnection
 socket.on('reconnect', () => {
 	if (username) {
 		socket.emit('register-user', username, () => {
@@ -58,8 +69,8 @@ socket.on('online-users', (users) => {
 	updateOnlineUsers(users);
 });
 
-socket.on('user-click', (target) => {
-    SomeRandomPosition(target)
+socket.on('user-click', (touchDelay) => {
+    imgRandom(touchDelay)
 });
 
 socket.on('create-game-page', firstPage);
