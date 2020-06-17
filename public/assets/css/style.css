@@ -97,9 +97,13 @@ h2 {
 	list-style: none;
 	color: white;
 	background-color:#218838;	
+	
 }
 
-
+#scoreResult{
+	padding: 0.5rem 0.75rem;
+	background-color:pink;	
+}
 
 
 #corona {
