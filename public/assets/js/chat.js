@@ -61,8 +61,6 @@ const SomeRandomPosition = (target) => {
 };
  
 img.addEventListener('click', e => {
-   //socket.emit('user-click', username) 
-   //console.log('Hello', username);  
 
 	let clickedTime = Date.now();
 	reactiontime = clickedTime-timer;
@@ -72,7 +70,6 @@ img.addEventListener('click', e => {
         reactiontime,
     }
 	socket.emit('user-click', infoAboutGamblers);
-	console.log('infoAboutGamblers',infoAboutGamblers);
 });
 
 
@@ -99,7 +96,6 @@ usernameForm.addEventListener('submit', e => {
 
 username = document.querySelector('#username').value;
 socket.emit('register-user', username, (status) => {
-	console.log("Server acknowledged the registration :D", status);
  
 		if (status.joinChat) {
 			startEl.classList.add('hide');
@@ -116,7 +112,7 @@ socket.emit('register-user', username, (status) => {
 socket.on('reconnect', () => {
 	if (username) {
 		socket.emit('register-user', username, () => {
-			console.log("The server acknowledged our reconnect.");
+			
 		});
 	}
 });
