@@ -5,9 +5,8 @@ const usernameForm = document.querySelector('#username-form');
 const gameWrapper = document.querySelector('#game-wrapper');
 const img = document.querySelector('#corona');
 const room = document.querySelector('#waitingForTheGambler');
-
 const gameOverResult = document.querySelector('#gameOver');
-
+const restartOver = document.querySelector('#restartOver') 
 
   
 let username = null;
@@ -26,14 +25,16 @@ const updateOnlineUsers = (users) => {
 		`<li class="user">Player: ${user}</li>`).join("");
 }
 
+
 // Update point board 
 const updatePointBoard = (pointBoard) => {
-	document.querySelector('#scoreResult')
+	document.querySelector('#pointResult')
 	.innerHTML = Object.entries(pointBoard).map(([key, value]) => {
         console.log(`${key}: ${value}`)
         return `<li class="list-item users">${key}: ${value}</li>`
     }).join('');
 };
+
 
 const firstPage = () => {
     room.classList.add('hide');
@@ -44,7 +45,7 @@ const gameOverPage = (pointBoard) => {
 	document.querySelector('#Result')
 	.innerHTML = Object.entries(pointBoard).map(([key, value]) => {
         console.log(`${key}: ${value}`)
-        return `<li class="list-item users">${key}: ${value} </li>`
+        return `<li class="list-item users"> ${key}: ${value} </li>`
     }).join('');
 	
 	gameOverResult.classList.remove('hide');
@@ -73,6 +74,7 @@ img.addEventListener('click', e => {
 	console.log('infoAboutGamblers',infoAboutGamblers);
 });
 
+
 const imgRandom = (touchDelay) => {
 	
 	setTimeout(() => {
@@ -81,6 +83,14 @@ const imgRandom = (touchDelay) => {
 	}, touchDelay.delay);
 	
 }
+
+//Restart the game
+restartOver.addEventListener('click', (e) => { 
+	e.preventDefault();
+
+	gameOverResult.classList.add('hide');
+    startEl.classList.remove('hide');
+})
 
 // Register new user from startpage
 usernameForm.addEventListener('submit', e => {
@@ -99,6 +109,7 @@ socket.emit('register-user', username, (status) => {
 	});
 
 });
+
 
 //Sockets for user registration and diconnection
 socket.on('reconnect', () => {

@@ -60,10 +60,12 @@ h2 {
 
 #play-wrapper{
 	background-image: url("../images/karta.jpg");
-	height: 70vh;
+	height: 75vh;
 	border-radius: 190px;
-	background-size: 100%;
+	background-size: 80%; 
 	position: relative;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 
@@ -80,6 +82,7 @@ h2 {
 	flex-basis: 20%;
 	border-left: 1px solid black;
 	background-color: #218838;
+
 
 }
 
@@ -98,6 +101,7 @@ h2 {
 	color: white;
 	background-color:#218838;	
 	
+	
 }
 
 #scoreResult{
@@ -109,7 +113,7 @@ h2 {
 #corona {
     vertical-align: middle;
     border-style: none;
-	width: 4%;
+	width: 3%;
 	position: absolute;
 	top: 200px;
 	left: 200px;
@@ -117,10 +121,20 @@ h2 {
 
 
 p{
-    margin: auto;
-    display: flex;
-    justify-content: center;
-	padding: 200px;
+	display: grid;
+	justify-content: center;
 	font-size: 2em;
+	list-style: none;
+	margin-top: 2rem;
+	
+}
+
+.btn{
+	font-size: 1rem;
+	border-radius: .25rem;
+	margin: auto;
+	display: flex;
+	padding: 0.3rem 0.75rem;
+
 }
 

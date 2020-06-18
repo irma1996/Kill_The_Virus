@@ -39,7 +39,6 @@ function NewGame(socket,id) {
  
 };
 
-
 // Updating pointBoard
 function updatePointBoard(id) {
     pointBoard[game.gamblers[id]] = game.score[id];
@@ -107,7 +106,6 @@ function RTcompare(socket) {
 };
 
 
-
 //Waiting for 2 gamblers to conect 
 function checkUsersOnline(socket) {
     if (Object.keys(users).length === 2) {
@@ -128,20 +126,6 @@ function checkUsersOnline(socket) {
     }
 }
 
-
-// Handle user disconnecting
-function handleUserDisconnect() {
-	debug(`Socket ${this.id} left the chat :(`);
-
-	// broadcast to all connected sockets that this user has left the chat
-	if (users[this.id]) {
-		this.broadcast.emit('user-disconnected', users[this.id]);
-	}
-
-	// remove user from list of connected users
-	delete users[this.id];
-}
- 
 
 // Handle a new user connecting
 function handleRegisterUser(username, callback) {
@@ -165,6 +149,19 @@ function handleRegisterUser(username, callback) {
 	this.broadcast.emit('online-users', getOnlineUsers());
 }
 
+
+// Handle user disconnecting
+function handleUserDisconnect() {
+	debug(`Socket ${this.id} left the chat :(`);
+
+	// broadcast to all connected sockets that this user has left the chat
+	if (users[this.id]) {
+		this.broadcast.emit('user-disconnected', users[this.id]);
+	}
+
+	// remove user from list of connected users
+	delete users[this.id];
+}
 
 module.exports = function(socket) {
 	debug(`Client ${socket.id} connected!`);
