@@ -12,6 +12,7 @@ const restartOver = document.querySelector('#restartOver')
 let username = null;
 let reactiontime = null;
 let timer = null;
+
 let infoAboutGamblers = {
     id: null,
     reactiontime

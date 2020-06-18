@@ -2,11 +2,12 @@
 // Socket Controller
  
 const debug = require('debug')('09-simple-chat:socket_controller');
-const users = {};
+let users = {};
+
 let io = null;
 let someOtherGamblers = {};
-let imgClicked = 0;  
 
+let imgClicked = 0;  
 let game = {
     gamblers: {},
     gamedRounds: 0,
@@ -27,12 +28,11 @@ function NewGame(socket,id) {
     console.log('creating game from gamblers: ', users[socket.id]);
         
     if (game.gamedRounds < 10) {
-        socket.emit('get-available-space', socket.id);
         console.log('Game rounds: ', game.gamedRounds)
     } else {
         io.emit('game-over', pointBoard);
         game.gamedRounds = 0;
-    
+        reset();
         console.log("game over");
         return;
     }
@@ -58,7 +58,7 @@ const SomeRandomPosition = (range) => {
 	   
 		  const touch = {
 			width: SomeRandomPosition(390),
-			height: SomeRandomPosition(690)
+			height: SomeRandomPosition(670)
 		  }
 
 		  const delay = SomeRandomPosition(900)
@@ -149,16 +149,30 @@ function handleRegisterUser(username, callback) {
 	this.broadcast.emit('online-users', getOnlineUsers());
 }
 
+//saved info about gamblers
+const reset = () => {
+    users = {};
+    game = {
+        gamblers: {},
+        gamedRounds: 0,
+        score: {},
+        reaction: {} 
+    }
+
+    pointBoard = {}; 
+
+}
 
 // Handle user disconnecting
 function handleUserDisconnect() {
 	debug(`Socket ${this.id} left the chat :(`);
-
+    if (game.gamblers[this.id]) {
 	// broadcast to all connected sockets that this user has left the chat
 	if (users[this.id]) {
 		this.broadcast.emit('user-disconnected', users[this.id]);
 	}
-
+    reset();
+    }
 	// remove user from list of connected users
 	delete users[this.id];
 }
